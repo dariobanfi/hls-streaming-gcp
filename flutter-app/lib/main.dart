@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:better_player/better_player.dart';
 
 // TODO change me
-const videoSource = "http://34.120.112.15/Clouds_1_1.mov/manifest.m3u8";
+const videoSource = "";
 
 void main() {
   runApp(const MyApp());
