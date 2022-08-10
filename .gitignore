@@ -1,0 +1,6 @@
+infrastructure/.terraform.lock.hcl
+infrastructure/.terraform/
+
+# .tfstate files
+*.tfstate
+*.tfstate.*

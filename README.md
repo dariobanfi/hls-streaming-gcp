@@ -5,3 +5,15 @@ An example on how to setup a HLS transcoding pipeline on Google Cloud and stream
 ![Architecture Diagram](./architecture_diagram.svg)
 
 Instructions are on a tutorial which is going to be published soon.
+
+# Deploying through Terraform
+
+Use the Terraform config yo automatically deploy all components in a new project of your choice.
+
+First create a project and then, edit terraform variables in terraform.tfvars
+
+After that, run:
+
+`terraform plan`
+
+`terrform apply`
