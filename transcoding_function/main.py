@@ -16,7 +16,7 @@ def handle_gcs_event(cloud_event):
     project_id = "hls-streaming-gcp"
     region = "europe-west1"
     input_uri = f"gs://{bucket}/{name}"
-    output_uri = f"gs://hls-streaming-gcp-processed-files/{name}"
+    output_uri = f"gs://hls-streaming-gcp-processed-files-{project_id}/{name}/"
     preset = "preset/web-hd"
 
     client = TranscoderServiceClient()
