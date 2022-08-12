@@ -8,7 +8,7 @@ Instructions are on a tutorial which is going to be published soon.
 
 # Deploying through Terraform
 
-*WARNING - WIP, NOT FULLY WORKING YET*
+*WARNING - WIP, NOT FULLY WORKING YET* - Waiting for next TF release next week with native support for triggers in cloud functions v2 
 
 Use the Terraform config yo automatically deploy all components in a new project of your choice.
 
