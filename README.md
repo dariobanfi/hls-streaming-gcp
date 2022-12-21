@@ -28,6 +28,6 @@ After that, you can test it by uploading a file in the newly created raw-files b
 # Troubleshooting
 
 There is a chance that running Terraform script on a new project fails with: `Error 400: Cannot create trigger ... Permission denied while using the Eventarc Service Agent.`
-This is because of a propagation issue with EventArc when creating the first triggers. In that case, just wait a couple of minutes and run it again.
+This is because of a propagation issue with EventArc when creating the first triggers. In that case, just wait a couple of minutes and run `terraform apply` again. 
 
 
