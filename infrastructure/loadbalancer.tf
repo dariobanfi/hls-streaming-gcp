@@ -1,7 +1,15 @@
+resource "google_project_service" "compute_service" {
+    project = var.project_id
+    service = "compute.googleapis.com"
+}
+
 resource "google_compute_global_address" "load-balancer-ip" {
   name         = "load-balancer-ip"
   address_type = "EXTERNAL"
   ip_version   = "IPV4"
+  depends_on = [
+    google_project_service.compute_service
+  ]
 }
 
 resource "google_compute_backend_bucket" "hls-streaming-bucket" {
@@ -13,6 +21,10 @@ resource "google_compute_backend_bucket" "hls-streaming-bucket" {
     default_ttl = 2419200
     max_ttl = 2419200
   }
+
+  depends_on = [
+    google_project_service.compute_service
+  ]
 }
 
 resource "google_compute_url_map" "hls-streaming-load-balancer" {

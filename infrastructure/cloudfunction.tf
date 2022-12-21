@@ -33,6 +33,11 @@ resource "google_project_service" "logging_service" {
     service = "logging.googleapis.com"
 }
 
+resource "google_project_service" "transcoder_service" {
+    project = var.project_id
+    service = "transcoder.googleapis.com"
+}
+
 resource "google_storage_bucket" "cloudfunction_source" {
     name          = "cloudfunction-source-${var.project_id}"
     location      = var.region
@@ -100,6 +105,7 @@ resource "google_cloudfunctions2_function" "function" {
         google_project_service.run_service,
         google_project_service.eventarc_service,
         google_project_service.logging_service,
-        google_service_account.transcoder_service_account
+        google_project_service.transcoder_service,
+        google_service_account.transcoder_service_account,
     ]
 }

@@ -9,8 +9,6 @@ from google.cloud.video.transcoder_v1.services.transcoder_service import (
 def handle_gcs_event(cloud_event):
     data = cloud_event.data
 
-    print(data)
-
     bucket = data["bucket"]
 
     name = data["name"]
