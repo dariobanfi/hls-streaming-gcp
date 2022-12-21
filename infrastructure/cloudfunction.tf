@@ -1,7 +1,37 @@
-provider "google-beta" {
+resource "google_project_service" "cloudfunctions_service" {
     project = var.project_id
+    service = "cloudfunctions.googleapis.com"
 }
 
+resource "google_project_service" "cloudbuild_service" {
+    project = var.project_id
+    service = "cloudbuild.googleapis.com"
+}
+
+resource "google_project_service" "pubsub_service" {
+    project = var.project_id
+    service = "pubsub.googleapis.com"
+}
+
+resource "google_project_service" "artifactregistry_service" {
+    project = var.project_id
+    service = "artifactregistry.googleapis.com"
+}
+
+resource "google_project_service" "run_service" {
+    project = var.project_id
+    service = "run.googleapis.com"
+}
+
+resource "google_project_service" "eventarc_service" {
+    project = var.project_id
+    service = "eventarc.googleapis.com"
+}
+
+resource "google_project_service" "logging_service" {
+    project = var.project_id
+    service = "logging.googleapis.com"
+}
 
 resource "google_storage_bucket" "cloudfunction_source" {
     name          = "cloudfunction-source-${var.project_id}"
@@ -22,28 +52,8 @@ resource "google_storage_bucket_object" "zip" {
   source = data.archive_file.source.output_path
 }
 
-# resource "google_eventarc_trigger" "upload" {
-#   name     = "eventarc-upload-trigger"
-#   location = var.region
-#   matching_criteria {
-#     attribute = "type"
-#     value     = "google.cloud.storage.object.v1.finalized"
-#   }
-#   matching_criteria {
-#     attribute = "bucket"
-#     value     = google_storage_bucket.raw_files.name
-#   }
-#   destination {
-#     cloud_function = google_cloudfunctions2_function.function.id
-#   }
-#   service_account = google_service_account.transcoder_service_account.email
-# }
-
 resource "google_cloudfunctions2_function" "function" {
-
-    provider = google-beta
     location = var.region
-
 
     name        = "transcoding-function"
     description = "Transcoding Function"
@@ -64,6 +74,11 @@ resource "google_cloudfunctions2_function" "function" {
         available_memory    = "256M"
         timeout_seconds     = 60
         service_account_email = google_service_account.transcoder_service_account.email
+        environment_variables = {
+            PROJECT_ID = var.project_id
+            REGION = var.region
+        }
+
     }
 
     event_trigger {
@@ -76,4 +91,15 @@ resource "google_cloudfunctions2_function" "function" {
             value = google_storage_bucket.raw_files.name
         }
     }
+
+    depends_on = [
+        google_project_service.cloudfunctions_service,
+        google_project_service.pubsub_service,
+        google_project_service.cloudbuild_service,
+        google_project_service.artifactregistry_service,
+        google_project_service.run_service,
+        google_project_service.eventarc_service,
+        google_project_service.logging_service,
+        google_service_account.transcoder_service_account
+    ]
 }

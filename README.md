@@ -8,14 +8,20 @@ Instructions are on a tutorial which is going to be published soon.
 
 # Deploying through Terraform
 
-*WARNING - WIP, NOT FULLY WORKING YET* - Waiting for next TF release next week with native support for triggers in cloud functions v2 
-
 Use the Terraform config yo automatically deploy all components in a new project of your choice.
 
-First create a project and then, edit terraform variables in terraform.tfvars
+First create a new Google Cloud project and then, edit terraform variables in `terraform.tfvars`
 
 After that, run:
 
 `terraform plan`
 
 `terrform apply`
+
+Terraform will take care about enabling all APIs and deploying the automation.
+
+After that, you can test it by uploading a file in the newly created raw-files bucket:
+
+`gsutil cp sample.mov gs://hls-streaming-gcp-raw-files-${PROJECT_ID}`
+
+
